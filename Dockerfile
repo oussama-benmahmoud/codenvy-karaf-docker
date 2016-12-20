@@ -7,7 +7,7 @@
 # Codenvy, S.A. - initial API and implementation
 
 FROM debian:jessie
-EXPOSE 4403 8080 8000 22 1099 8101 44444
+EXPOSE 4403 8080 8000 22 1099 8101 44444 8181
 RUN apt-get update && \
     apt-get -y install locales openssh-server sudo procps wget unzip mc git curl subversion nmap  && \
     mkdir /var/run/sshd && \
@@ -20,7 +20,7 @@ RUN apt-get update && \
 
 USER user
 
-LABEL che:server:8080:ref=tomcat8 che:server:8080:protocol=http che:server:8000:ref=tomcat8-debug che:server:8000:protocol=http
+LABEL che:server:8181:ref=karaf che:server:8080:ref=tomcat8 che:server:8080:protocol=http che:server:8000:ref=tomcat8-debug che:server:8000:protocol=http
 
 
 ENV MAVEN_VERSION=3.3.9 \
