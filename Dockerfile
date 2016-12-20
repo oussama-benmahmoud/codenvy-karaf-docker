@@ -26,7 +26,8 @@ LABEL che:server:8080:ref=tomcat8 che:server:8080:protocol=http che:server:8000:
 ENV MAVEN_VERSION=3.3.9 \
     JAVA_VERSION=8u45 \
     JAVA_VERSION_PREFIX=1.8.0_45 \
-    TOMCAT_HOME=/home/user/tomcat8
+    TOMCAT_HOME=/home/user/tomcat8 \
+    KARAF_VERSION=4.0.8
 
 ENV JAVA_HOME=/opt/jdk$JAVA_VERSION_PREFIX \
 M2_HOME=/home/user/apache-maven-$MAVEN_VERSION
@@ -52,9 +53,6 @@ ENV LANG C.UTF-8
 RUN echo "export JAVA_HOME=/opt/jdk$JAVA_VERSION_PREFIX\nexport M2_HOME=/home/user/apache-maven-$MAVEN_VERSION\nexport TOMCAT_HOME=/home/user/tomcat8\nexport PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH" >> /home/user/.bashrc && \
     sudo localedef -i en_US -f UTF-8 en_US.UTF-8
     
-
-ENV KARAF_VERSION=4.0.6
-
 RUN wget http://www-us.apache.org/dist/karaf/${KARAF_VERSION}/apache-karaf-${KARAF_VERSION}.tar.gz; \
     mkdir /opt/karaf; \
     tar --strip-components=1 -C /opt/karaf -xzf apache-karaf-${KARAF_VERSION}.tar.gz; \
