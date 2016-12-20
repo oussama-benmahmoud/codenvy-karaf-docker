@@ -20,13 +20,12 @@ RUN apt-get update && \
 
 USER user
 
-LABEL che:server:8181:ref=karaf che:server:8080:ref=tomcat8 che:server:8080:protocol=http che:server:8000:ref=tomcat8-debug che:server:8000:protocol=http
+LABEL che:server:8181:ref=karaf che:server:8181:protocol=http
 
 
 ENV MAVEN_VERSION=3.3.9 \
     JAVA_VERSION=8u45 \
     JAVA_VERSION_PREFIX=1.8.0_45 \
-    TOMCAT_HOME=/home/user/tomcat8 \
     KARAF_VERSION=4.0.8
 
 ENV JAVA_HOME=/opt/jdk$JAVA_VERSION_PREFIX \
@@ -34,7 +33,7 @@ M2_HOME=/home/user/apache-maven-$MAVEN_VERSION
 
 ENV PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH
 
-RUN mkdir /home/user/cbuild /home/user/tomcat8 /home/user/karaf /home/user/apache-maven-$MAVEN_VERSION && \
+RUN mkdir /home/user/cbuild /home/user/karaf /home/user/apache-maven-$MAVEN_VERSION && \
   wget \
   --no-cookies \
   --no-check-certificate \
@@ -45,13 +44,10 @@ RUN mkdir /home/user/cbuild /home/user/tomcat8 /home/user/karaf /home/user/apach
 
 ENV TERM xterm
 
-RUN wget -qO- "http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.24/bin/apache-tomcat-8.0.24.tar.gz" | tar -zx --strip-components=1 -C /home/user/tomcat8 && \
-    rm -rf /home/user/tomcat8/webapps/*
-
 RUN wget -qO- "http://www-us.apache.org/dist/karaf/${KARAF_VERSION}/apache-karaf-${KARAF_VERSION}.tar.gz" | tar -zx --strip-components=1 -C /home/user/karaf
 
 ENV LANG C.UTF-8
-RUN echo "export JAVA_HOME=/opt/jdk$JAVA_VERSION_PREFIX\nexport M2_HOME=/home/user/apache-maven-$MAVEN_VERSION\nexport TOMCAT_HOME=/home/user/tomcat8\nexport KARAF_HOME=/home/user/karaf\nexport PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH" >> /home/user/.bashrc && \
+RUN echo "export JAVA_HOME=/opt/jdk$JAVA_VERSION_PREFIX\nexport M2_HOME=/home/user/apache-maven-$MAVEN_VERSION\nexport KARAF_HOME=/home/user/karaf\nexport PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH" >> /home/user/.bashrc && \
     sudo localedef -i en_US -f UTF-8 en_US.UTF-8
   
 
